@@ -37,7 +37,7 @@ class PreviewFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_preview, container, false)
 
         val imageRes = arguments?.getInt(KEY_IMAGE_RES) ?: 0
-        view.image_view.transitionName = imageRes.toString()
+        view.image.transitionName = imageRes.toString()
 
         Glide.with(this)
             .load(imageRes)
@@ -63,7 +63,7 @@ class PreviewFragment : Fragment() {
                     return false
                 }
             })
-            .into(view.image_view)
+            .into(view.image)
         return view
     }
 }

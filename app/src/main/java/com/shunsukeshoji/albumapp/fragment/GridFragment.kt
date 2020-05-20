@@ -43,7 +43,30 @@ class GridFragment : Fragment() {
 
     //    遷移先で表示されていた画像の位置までスクロールする処理
     private fun scrollToPosition() {
-        // TODO
+        recyclerView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
+                recyclerView.removeOnLayoutChangeListener(this)
+                val layoutManager = recyclerView.layoutManager
+                val viewAtPosition =
+                    layoutManager?.findViewByPosition(MainActivity.currentPosition) ?: return
+                if (layoutManager
+                        .isViewPartiallyVisible(viewAtPosition, false, true)
+                ) {
+                    recyclerView.post { layoutManager.scrollToPosition(MainActivity.currentPosition) }
+                }
+
+            }
+        })
     }
 
 
@@ -58,8 +81,9 @@ class GridFragment : Fragment() {
             ) {
                 val selectedViewHolder =
                     recyclerView.findViewHolderForAdapterPosition(MainActivity.currentPosition)
-                selectedViewHolder?.let {
-                    sharedElements?.put(names?.get(0) ?: return, it.itemView.image_view)
+                        ?: return
+                selectedViewHolder.let {
+                    sharedElements?.put(names?.get(0) ?: return, it.itemView.card_image)
                 }
             }
         })

@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.shunsukeshoji.albumapp.ImageData
 import com.shunsukeshoji.albumapp.fragment.PreviewFragment
 
-class ImagePagerAdapter(fragmentManager: FragmentManager) :
-    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class ImagePagerAdapter(fragment: Fragment) :
+    FragmentStatePagerAdapter(fragment.childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount(): Int = ImageData.IMAGE_DRAWABLES.size
 

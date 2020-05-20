@@ -22,7 +22,7 @@ class ImagePagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewPager = inflater.inflate(R.layout.fragment_pager_image, container, false) as ViewPager
-        viewPager.adapter = ImagePagerAdapter(childFragmentManager)
+        viewPager.adapter = ImagePagerAdapter(this)
 
         viewPager.currentItem = MainActivity.currentPosition ?: 0
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
@@ -57,7 +57,7 @@ class ImagePagerFragment : Fragment() {
                     ) as? Fragment ?: return
 
                 currentFragment.view?.let { view ->
-                    sharedElements?.put(names?.get(0) ?: return, view.image_view)
+                    sharedElements?.put(names?.get(0) ?: return, view.image)
                 }
             }
         })

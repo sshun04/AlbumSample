@@ -8,7 +8,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val KEY_CURRENT_POSITION = "key_current_position"
-        var currentPosition = 0
+        var currentPosition = 1
     }
 
 
@@ -17,12 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
+            currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION,0)
             return
         }
 
 
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
             .add(R.id.fragment_container, GridFragment(), GridFragment::class.simpleName)
             .commit()
     }

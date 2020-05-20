@@ -47,13 +47,14 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
 
         override fun onItemClicked(view: View?, adapterPosition: Int) {
             MainActivity.currentPosition = adapterPosition
+
             val transitionSet = fragment.exitTransition as TransitionSet
             transitionSet.excludeTarget(view ?: return, true)
 
             fragment.requireFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .addSharedElement(view.image_view, view.image_view.transitionName)
+                .addSharedElement(view.card_image, view.card_image.transitionName)
                 .replace(
                     R.id.fragment_container,
                     ImagePagerFragment(),
@@ -87,7 +88,7 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
 
         fun onBind() {
             setImage(adapterPosition)
-            view.image_view.transitionName = ImageData.IMAGE_DRAWABLES[adapterPosition].toString()
+            view.card_image.transitionName = ImageData.IMAGE_DRAWABLES[adapterPosition].toString()
         }
 
         private fun setImage(adapterPosition: Int) {
@@ -100,7 +101,7 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        viewHolderListener.onLoadCompleted(view.image_view, adapterPosition)
+                        viewHolderListener.onLoadCompleted(view.card_image, adapterPosition)
                         return false
                     }
 
@@ -110,11 +111,11 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        viewHolderListener.onLoadCompleted(view.image_view, adapterPosition)
+                        viewHolderListener.onLoadCompleted(view.card_image, adapterPosition)
                         return false
                     }
                 })
-                .into(view.image_view)
+                .into(view.card_image)
         }
 
         override fun onClick(v: View?) {
