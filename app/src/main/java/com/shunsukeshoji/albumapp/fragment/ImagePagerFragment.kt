@@ -24,7 +24,7 @@ class ImagePagerFragment : Fragment() {
         viewPager = inflater.inflate(R.layout.fragment_pager_image, container, false) as ViewPager
         viewPager.adapter = ImagePagerAdapter(childFragmentManager)
 
-        viewPager.currentItem = MainActivity.currentPosition
+        viewPager.currentItem = MainActivity.currentPosition ?: 0
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 MainActivity.currentPosition = position
