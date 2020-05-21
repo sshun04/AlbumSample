@@ -12,6 +12,8 @@ import com.shunsukeshoji.albumapp.MainActivity
 import com.shunsukeshoji.albumapp.R
 import com.shunsukeshoji.albumapp.adapter.ImagePagerAdapter
 import kotlinx.android.synthetic.main.fragment_preview.view.*
+import java.lang.Exception
+import java.lang.IndexOutOfBoundsException
 
 class ImagePagerFragment : Fragment() {
     private lateinit var viewPager: ViewPager
@@ -54,10 +56,10 @@ class ImagePagerFragment : Fragment() {
                     viewPager.adapter?.instantiateItem(
                         viewPager,
                         MainActivity.currentPosition
-                    ) as? Fragment ?: return
+                    ) as? Fragment? ?: throw Exception()
 
                 currentFragment.view?.let { view ->
-                    sharedElements?.put(names?.get(0) ?: return, view.image)
+                    sharedElements?.put(names?.get(0) ?: throw IndexOutOfBoundsException(), view.image)
                 }
             }
         })

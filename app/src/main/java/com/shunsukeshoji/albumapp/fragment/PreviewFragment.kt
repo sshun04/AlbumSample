@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.shunsukeshoji.albumapp.R
 import kotlinx.android.synthetic.main.fragment_preview.view.*
+import java.util.*
 
 class PreviewFragment : Fragment() {
 
@@ -36,7 +37,7 @@ class PreviewFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_preview, container, false)
 
-        val imageRes = arguments?.getInt(KEY_IMAGE_RES) ?: 0
+        val imageRes = arguments?.getInt(KEY_IMAGE_RES) ?: throw KotlinNullPointerException()
         view.image.transitionName = imageRes.toString()
 
         Glide.with(this)
@@ -49,7 +50,7 @@ class PreviewFragment : Fragment() {
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    requireParentFragment().startPostponedEnterTransition()
+                    parentFragment?.startPostponedEnterTransition()
                     return false
                 }
 
@@ -59,7 +60,7 @@ class PreviewFragment : Fragment() {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    requireParentFragment().startPostponedEnterTransition()
+                    parentFragment?.startPostponedEnterTransition()
                     return false
                 }
             })

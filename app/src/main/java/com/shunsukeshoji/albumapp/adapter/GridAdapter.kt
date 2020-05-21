@@ -53,7 +53,7 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
 
             fragment.requireFragmentManager()
                 .beginTransaction()
-                .setReorderingAllowed(true)
+                .setReorderingAllowed(true).setAllowOptimization(true)
                 .addSharedElement(view.card_image, view.card_image.transitionName)
                 .replace(
                     R.id.fragment_container,

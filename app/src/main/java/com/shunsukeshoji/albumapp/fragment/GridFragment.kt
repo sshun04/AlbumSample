@@ -12,6 +12,7 @@ import com.shunsukeshoji.albumapp.MainActivity
 import com.shunsukeshoji.albumapp.R
 import com.shunsukeshoji.albumapp.adapter.GridAdapter
 import kotlinx.android.synthetic.main.item_image.view.*
+import java.lang.IndexOutOfBoundsException
 
 /* Created by shojishunsuke on 2020/05/21
  * Copyright © 2020 Shunsuke Shoji. All rights reserved.
@@ -81,9 +82,9 @@ class GridFragment : Fragment() {
             ) {
                 val selectedViewHolder =
                     recyclerView.findViewHolderForAdapterPosition(MainActivity.currentPosition)
-                        ?: return
+                        ?: throw KotlinNullPointerException()
                 selectedViewHolder.let {
-                    sharedElements?.put(names?.get(0) ?: return, it.itemView.card_image)
+                    sharedElements?.put(names?.get(0) ?: throw IndexOutOfBoundsException(), it.itemView.card_image)
                 }
             }
         })
