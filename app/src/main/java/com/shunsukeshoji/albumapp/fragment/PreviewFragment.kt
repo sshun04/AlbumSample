@@ -13,17 +13,16 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.shunsukeshoji.albumapp.R
 import kotlinx.android.synthetic.main.fragment_preview.view.*
-import java.util.*
 
 class PreviewFragment : Fragment() {
 
     companion object {
-        private const val KEY_IMAGE_RES = "key_image_res"
+        private const val KEY_IMAGE_URL = "key_image_url"
 
-        fun newInstance(imageRes: Int): PreviewFragment {
+        fun newInstance(imageUrl: String): PreviewFragment {
             val fragment = PreviewFragment()
             val argument = Bundle().apply {
-                putInt(KEY_IMAGE_RES, imageRes)
+                putString(KEY_IMAGE_URL, imageUrl)
             }
             fragment.arguments = argument
             return fragment
@@ -37,11 +36,11 @@ class PreviewFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_preview, container, false)
 
-        val imageRes = arguments?.getInt(KEY_IMAGE_RES) ?: throw KotlinNullPointerException()
-        view.image.transitionName = imageRes.toString()
+        val imageUrl = arguments?.getString(KEY_IMAGE_URL) ?: throw KotlinNullPointerException()
+        view.image.transitionName = imageUrl
 
         Glide.with(this)
-            .load(imageRes)
+            .load(imageUrl)
             .listener(object : RequestListener<Drawable> {
                 override fun onResourceReady(
                     resource: Drawable?,

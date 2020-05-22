@@ -2,8 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
-    android:layout_height="wrap_content">
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/card_image"
@@ -12,4 +13,5 @@
         android:layout_gravity="center"
         android:contentDescription="image"
         android:scaleType="centerCrop" />
+
 </androidx.cardview.widget.CardView>

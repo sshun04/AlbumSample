@@ -12,7 +12,6 @@ import com.shunsukeshoji.albumapp.MainActivity
 import com.shunsukeshoji.albumapp.R
 import com.shunsukeshoji.albumapp.adapter.GridAdapter
 import kotlinx.android.synthetic.main.item_image.view.*
-import java.lang.IndexOutOfBoundsException
 
 /* Created by shojishunsuke on 2020/05/21
  * Copyright © 2020 Shunsuke Shoji. All rights reserved.
@@ -29,11 +28,11 @@ class GridFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         recyclerView = inflater.inflate(R.layout.fragment_grid, container, false) as RecyclerView
-        recyclerView.adapter = GridAdapter(this)
-
+        val adapter = GridAdapter(this)
+        adapter.submitList(MainActivity.currentList)
+        recyclerView.adapter = adapter
         prepareTransitions()
         postponeEnterTransition()
-
         return recyclerView
     }
 
@@ -59,17 +58,16 @@ class GridFragment : Fragment() {
                 recyclerView.removeOnLayoutChangeListener(this)
                 val layoutManager = recyclerView.layoutManager
                 val viewAtPosition =
-                    layoutManager?.findViewByPosition(MainActivity.currentPosition) ?: return
-                if (layoutManager
+                    layoutManager?.findViewByPosition(MainActivity.currentPosition)
+                if (viewAtPosition == null || layoutManager
                         .isViewPartiallyVisible(viewAtPosition, false, true)
                 ) {
-                    recyclerView.post { layoutManager.scrollToPosition(MainActivity.currentPosition) }
+                    recyclerView.post { layoutManager?.scrollToPosition(MainActivity.currentPosition) }
                 }
 
             }
         })
     }
-
 
     private fun prepareTransitions() {
         exitTransition = TransitionInflater.from(requireContext())
@@ -84,7 +82,10 @@ class GridFragment : Fragment() {
                     recyclerView.findViewHolderForAdapterPosition(MainActivity.currentPosition)
                         ?: throw KotlinNullPointerException()
                 selectedViewHolder.let {
-                    sharedElements?.put(names?.get(0) ?: throw IndexOutOfBoundsException(), it.itemView.card_image)
+                    sharedElements?.put(
+                        names?.get(0) ?: throw IndexOutOfBoundsException(),
+                        it.itemView.card_image
+                    )
                 }
             }
         })
